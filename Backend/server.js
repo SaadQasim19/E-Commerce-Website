@@ -3,6 +3,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./Config/db.js";
+
+const PORT = process.env.PORT || 5000;
+
 // import productModel from "./models/product.model.js";
 // import mongoose from "mongoose";
 import productRoutes from "./Routes/product_routes.js";
@@ -23,7 +26,7 @@ app.use(express.json());
 app.use("/api/products", productRoutes);
 
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
   connectDB();
-  console.log("Server is running on port : http://localhost:8000");
+  console.log("Server is running on port : http://localhost:"+ PORT);
 });

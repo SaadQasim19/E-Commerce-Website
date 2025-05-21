@@ -7,9 +7,8 @@ import { LuSun } from "react-icons/lu";
 export default function Navbar() {
 
   const{colorMode, toggleColorMode} = useColorMode();
-
   return (
-    <Container maxW={"1140px"} px={4} bg={useColorModeValue("gray.100" , "gray.900")} >
+<Container maxW={"1140px"} px={4}  >
       <Flex
         h={16}
         alignItems={"center"}
@@ -38,8 +37,8 @@ export default function Navbar() {
             </Button>
         </Link>
         <Button onClick={toggleColorMode} >
-          {colorMode === "light" ?<IoMoon/>:<LuSun size="20"/>}
-          {/* {colorMode === "light" ? "🌙":"☀️"} */}
+          {/* {colorMode === "light" ?<IoMoon/>:<LuSun size="20"/>} */}
+          {colorMode === "light" ? "🌙":"☀️"}
 
 
         </Button>

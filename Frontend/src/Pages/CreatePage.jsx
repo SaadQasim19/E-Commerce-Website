@@ -6,8 +6,10 @@ import {
   Box,
   Input,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import ProductStore from "../Store/product";  
 
 export default function CreatePage() {
   const [newProduct, setNewProduct] = useState({
@@ -16,9 +18,34 @@ export default function CreatePage() {
     image: "",
   });
 
-  const handleNewProduct = () => {
+  const createProduct = ProductStore((state) => state.createProduct); 
+  const toast = useToast(); 
+
+  const handleNewProduct = async () => {
     console.log("New Product Created", newProduct);
-    // Later: send this to backend with fetch/axios
+    const result = await createProduct(newProduct); 
+    console.log(`Result:`, result); 
+
+    if (result.success) {
+      toast({
+        title: "Product Created",
+        description: result.message,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } else {
+      toast({
+        title: "Error",
+        description: result.message,
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+
+    //&Optionally reset the form:
+    setNewProduct({ name: "", price: "", image: "" });
   };
 
   return (

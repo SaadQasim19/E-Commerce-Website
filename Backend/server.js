@@ -3,15 +3,20 @@
 import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./Config/db.js";
+import cors from 'cors';
 
+
+dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 // import productModel from "./models/product.model.js";
 // import mongoose from "mongoose";
 import productRoutes from "./Routes/product_routes.js";
-dotenv.config();
+
 
 const app = express();
+app.use(cors());
+
 
 //! Middleware
 //~ Without this, req.body will be undefined.

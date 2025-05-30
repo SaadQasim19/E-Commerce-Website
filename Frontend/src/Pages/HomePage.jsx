@@ -3,11 +3,15 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProductStore from "../Store/product";
 import ProductCard from "../Components/ProductCard";
+
 export default function HomePage() {
-  const { fetchProducts, oldProduct } = ProductStore();
+  const fetchProducts = ProductStore((state) => state.fetchProducts);
+  const oldProduct = ProductStore((state) => state.oldProduct);
+
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
   console.log("Products:", oldProduct);
 
   return (
@@ -32,25 +36,26 @@ export default function HomePage() {
             <ProductCard key={product._id} product={product} />
           ))}
         </SimpleGrid>
-{oldProduct.length === 0 && (
-        <Text
-          fontSize={"xl"}
-          textAlign={"center"}
-          fontWeight={"bold"}
-          color={"gray.500"}
-        >
-          No Products Found!
-          <Link to={"/create"}>
-            <Text
-              as={"span"}
-              color={"blue.500"}
-              _hover={{ textDecoration: "underline" }}
-            >
-              Create Product
-            </Text>
-          </Link>
-        </Text>
-)}
+
+        {oldProduct.length === 0 && (
+          <Text
+            fontSize={"xl"}
+            textAlign={"center"}
+            fontWeight={"bold"}
+            color={"gray.500"}
+          >
+            No Products Found!{" "}
+            <Link to={"/create"}>
+              <Text
+                as={"span"}
+                color={"blue.500"}
+                _hover={{ textDecoration: "underline" }}
+              >
+                Create Product
+              </Text>
+            </Link>
+          </Text>
+        )}
       </VStack>
     </Container>
   );

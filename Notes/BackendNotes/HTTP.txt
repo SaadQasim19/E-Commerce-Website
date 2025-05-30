@@ -24,3 +24,7 @@ patch  = replace / update part of field
 
 4-DELETE
 Used to delete a resource.
+
+
+....Cors Error....
+error while fetching products was due to backend & frontend server running issue . 

@@ -70,7 +70,62 @@ const ProductStore = create((set) => ({
       console.error("Error deleting product:", error);
       return { success: false, message: "Error deleting product" };
     }
+  },
+  updateProducts: async (id, updateProduct) => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/products/${id}`, {
+        method: 'PUT',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateProduct)
+      });
+  
+      if (!res.ok) {
+        throw new Error("Failed to update product");
+      }
+  
+      const data = await res.json();
+  
+      set((state) => ({
+        oldProduct: state.oldProduct.map(product =>
+          product._id === id ? { ...product, ...data.data } : product
+        )
+      }));
+  
+      return { success: true, message: "Product updated successfully" };
+    } catch (error) {
+      console.error("Error updating product:", error);
+      return { success: false, message: "Error updating product" };
+    }
   }
+  
+  // updateProducts: async(id , updateProducts)=>{
+  //   try {
+  //     const res = await fetch(`http://localhost:8000/api/products/${id}`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(updateProducts)
+  //     });
+
+  //     if (!res.ok) {
+  //       throw new Error("Failed to update product");
+  //     }
+
+  //     const data = await res.json();
+
+  //     set((state) => ({
+  //       oldProduct: state.oldProduct.map(product =>
+  //         product._id === id ? data.data : product
+  //       )
+  //     }));
+
+  //     return { success: true, message: "Product updated successfully" };
+  //   } catch (error) {
+  //     console.error("Error updating product:", error);
+  //     return { success: false, message: "Error updating product" };
+  //   }
+  // }
 
 }));
 
